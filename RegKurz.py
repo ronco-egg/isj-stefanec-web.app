@@ -1,4 +1,4 @@
-from flask import Flask, request # type: ignore
+from flask import Flask, request, render_template
 import sqlite3
 import hashlib
 
