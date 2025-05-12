@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Kurzy</title>
+    <title>Treneri</title>
     <link rel = "stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 
 <body>
-    <h2>Zoznam kurzov:</h2>
-        {% for kurz in kurzy: %}
-            <p>{{kurz}}</p>
+    <h2>Zoznam trenerov a kurzov:</h2>
+        {% for trener in treneri: %}
+            <p>{{trener}}</p>
         {% endfor %}
     
     <a href="/">Späť</a>  

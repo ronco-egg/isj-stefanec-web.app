@@ -164,14 +164,12 @@ def zobraz_miesta():
 
     conn.close()
 
-    # Jednoduchý textový výpis kurzov
-    vystup = "<h2>Zoznam Miest:</h2>"  # nadpis <h2>
-    for Nazov_miesta in miesto:
-        vystup += f"<p>{Nazov_miesta}</p>"      # výpis kurzov do paragrafov <p>
+   
+    # for Nazov_miesta in miesto:
+     #    vystup += f"<p>{Nazov_miesta}</p>"      # výpis kurzov do paragrafov <p>
 
-    # Odkaz na návrat
-    vystup += '<a href="/">Späť</a>'    # k výstupu (+) pridáme odkaz s textom "Späť", ktorý odkazuje na stránku "/", teda homepage
-    return vystup
+    # vystup += '<a href="/">Späť</a>'    # k výstupu (+) pridáme odkaz s textom "Späť", ktorý odkazuje na stránku "/", teda homepage
+    return render_template ("miesta.html", miesto = miesto)
 
 
 @app.route('/kurzy')  # API endpoint
@@ -203,13 +201,13 @@ def zobraz_trenerov():
     conn.close()
 
     # Jednoduchý textový výpis trénerov a ich kurzov
-    vystup = "<h2>Zoznam trénerov a kurzov:</h2>"
-    for trener in treneri:
-        vystup += f"<p>{trener}</p>"
+    #vystup = "<h2>Zoznam trénerov a kurzov:</h2>"
+    #for trener in treneri:
+    #    vystup += f"<p>{trener}</p>"
 
     # Odkaz na návrat
-    vystup += '<a href="/">Späť</a>'
-    return vystup
+    #vystup += '<a href="/">Späť</a>'
+    return render_template ("treneri.html", treneri = treneri)
 
 @app.route('/sucetkapacity')
 def zobraz_kapacitu():
@@ -223,11 +221,11 @@ def zobraz_kapacitu():
     Kapacita = cursor.fetchall()
 
     conn.close()
-    vystup = "<h2>Súčet kapacity kurzov začínajúce na P:</h2>"
-    for Max_pocet_ucastnikov in Kapacita:
-        vystup += f"<p>{Max_pocet_ucastnikov}</p>"
-    vystup += '<a href="/">Späť</a>'
-    return vystup
+    #vystup = "<h2>Súčet kapacity kurzov začínajúce na P:</h2>"
+    #for Max_pocet_ucastnikov in Kapacita:
+    #    vystup += f"<p>{Max_pocet_ucastnikov}</p>"
+    #vystup += '<a href="/">Späť</a>'
+    return render_template ("kapacita.html",Kapacita = Kapacita)
 
 if __name__ == '__main__':
     app.run(debug=True)
