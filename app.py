@@ -1,6 +1,6 @@
 # Je NUTNÉ nainštalovať alíček: do konzoly napíšte "pip install flask"
 import hashlib
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template # type: ignore
 import sqlite3
 
 app = Flask(__name__)
