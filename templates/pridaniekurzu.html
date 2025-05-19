@@ -2,15 +2,27 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>kapacita</title>
+    <title>Pridaj kurz</title>
     <link rel = "stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
+
 <body>
-    <h2>Súčet kapacity kurzov začínajúce na P:</h2>
-        {% for Max_pocet_ucastnikov in Kapacita: %}
-            <p>{{Max_pocet_ucastnikov}}</p>
-        {% endfor %}
-    
-    <a href="/">Späť</a>  
+    <h2>Pridaj kurz</h2>
+    <form action="/pridaj_kurz" method="post">
+    <label>Názov kurzu:</label><br> 
+    <input type="text" name="nazov" required><br><br>
+    <label>Typ Športu:</label><br>
+    <input type="text": name="typ_sportu" required><br><br>
+    <label>Maximálny počet účastníkov:</label><br>
+    <input type="text" name="max_ucastnici" required><br><br>
+    <label>ID trénera:</label><br>
+    <input type="text" name="id_trenera" required><br><br>
+    <label>ID nového kurzu:</label><br>
+    <input type="text" name="id_kurzu" required><br><br>
+
+    <button type="submit">Pridať kurz</button>
+    </form>
+    <hr> 
+    <a href="/">Spät</a>
 </body>
 </html>

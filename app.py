@@ -55,7 +55,8 @@ class Kurz(db.Model):
 
 @app.route('/registracia_trenera', methods=['GET'])
 def registracia_form():
-    return '''
+    return render_template("registraciatrenera.html")
+    '''
         <h2>Registrácia trénera</h2>
         <form action="/registracia" method="post">
             <label>Meno:</label><br>
@@ -81,7 +82,8 @@ def registracia_form():
 
 @app.route('/pridanie_kurzu', methods=['GET'])
 def pridanie_kurzu():
-    return '''
+    return render_template("pridaniekurzu.html")
+    '''
         <h2>Registrácia kurzu</h2>
         <form action="/pridanie_kurzu" method="post">
             <label>Názov:</label><br>
@@ -118,12 +120,13 @@ def registracia_trenera():
     conn = pripoj_db()
     cursor = conn.cursor()
     cursor.execute("INSERT INTO Treneri (Meno, Priezvisko, Specializacia, Telefon, Heslo) VALUES (?, ?, ?, ?, ?)", 
-                   (meno, priezvisko, specializacia, telefon, heslo_hash))
+                    (meno, priezvisko, specializacia, telefon, heslo_hash))
     conn.commit()
     conn.close()
 
     # Hlásenie o úspešnej registrácii
-    return '''
+    return render_template("success.html")
+    '''
         <h2>Tréner bol úspešne zaregistrovaný!</h2>
         <hr>
         <a href="/">Späť</a>
@@ -165,7 +168,8 @@ def registracia_kurzu():
     conn.commit()
     conn.close()
     
-    return '''
+    return render_template("success_kurz.html")
+    '''
         <h2>Kurz bol úspešne zaregistrovaný!</h2>
         <hr>
         <a href="/">Späť</a>
