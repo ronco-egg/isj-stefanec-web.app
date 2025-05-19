@@ -3,6 +3,8 @@ from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
 import os
+import hashlib
+from flask import Flask, request, render_template # type: ignore
 import sqlite3
 
 app = Flask(__name__,instance_relative_config=True)
