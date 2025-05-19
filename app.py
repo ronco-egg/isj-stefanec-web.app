@@ -41,10 +41,10 @@ def index():
 
 class Kurz(db.Model): 
     __tablename__= "Kurzy" 
-    ID_kurzu             = db.column(db.Integer, primary_key=True) 
-    Nazov_kurzu          = db.column(db.String, nullable=False) 
-    Typ_sportu           = db.column(db.String) 
-    Max_pocet_ucastnikov = db.column(db.Integer) 
+    ID_kurzu             = db.Column(db.Integer, primary_key=True) 
+    Nazov_kurzu          = db.Column(db.String, nullable=False) 
+    Typ_sportu           = db.Column(db.String) 
+    Max_pocet_ucastnikov = db.Column(db.Integer) 
     ID_trenera           = db.Column(db.Integer) 
     
     def __repr__(self):
