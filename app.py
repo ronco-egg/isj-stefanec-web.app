@@ -1,16 +1,14 @@
 # Je NUTNÉ nainštalovať alíček: do konzoly napíšte "pip install flask"
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-import hashlib
 import os
 import hashlib
-from flask import Flask, request, render_template # type: ignore
 import sqlite3
 
-app = Flask(__name__,instance_relative_config=True)
-db_path = os.path.join(app.instance_path,"kurzy.db")
-
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}".replace("//","/")
+app = Flask(__name__, instance_relative_config=True)
+os.makedirs(app.instance_path, exist_ok=True)
+db_path = os.path.join(app.instance_path, "kurzy.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 # rýchly úvod do HTML elementov:
