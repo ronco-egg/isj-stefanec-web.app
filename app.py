@@ -1,11 +1,16 @@
 # Je NUTNÉ nainštalovať alíček: do konzoly napíšte "pip install flask"
-import hashlib
 from flask import Flask, request, render_template
+from flask_sqlalchemy import SQLAlchemy
+import hashlib
+import os
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__,instance_relative_config=True)
+db_path = os.path.join(app.instance_path,"kurzy.db")
 
-
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}".replace("//","/")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
 # rýchly úvod do HTML elementov:
 # <h1> ...text... </h1>, alebo <h2>             - heading - nadpisy
 # <p> ...text... </p>                           - paragraf (normálny text)
@@ -33,6 +38,17 @@ def index():
         <a href="/pridanie_kurzu"><button>Registruj kurz</button></a>
         <hr>
     '''
+
+class Kurz(db.Model): 
+    __tablename__= "Kurzy" 
+    ID_kurzu             = db.column(db.Integer, primary_key=True) 
+    Nazov_kurzu          = db.column(db.String, nullable=False) 
+    Typ_sportu           = db.column(db.String) 
+    Max_pocet_ucastnikov = db.column(db.Integer) 
+    ID_trenera           = db.Column(db.Integer) 
+    
+    def __repr__(self):
+        return f"<Kurz {self.Nazov_kurzu}>"
 
 
 @app.route('/registracia_trenera', methods=['GET'])
@@ -151,7 +167,7 @@ def registracia_kurzu():
         <h2>Kurz bol úspešne zaregistrovaný!</h2>
         <hr>
         <a href="/">Späť</a>
-    '''
+    ''' 
 
 # PODSTRÁNKA NA ZOBRAZENIE KURZOV
 @app.route('/miesta')  # API endpoint
@@ -174,6 +190,7 @@ def zobraz_miesta():
 
 @app.route('/kurzy')  # API endpoint
 def zobraz_kurzy():
+    """
     conn = pripoj_db()
     cursor = conn.cursor()
 
@@ -183,7 +200,10 @@ def zobraz_kurzy():
     conn.close()
 
     # Jednoduchý textový výpis kurzov
-    return render_template ("kurzy.html", kurzy = kurzy)
+    return render_template ("kurzy.html", kurzy = kurzy)   
+"""
+    kurzy = Kurz.query.all()
+    return render_template("kurzy.html", kurzy = kurzy)
 
 
 # PODSTRÁNKA NA ZOBRAZENIE TRÉNEROV
@@ -208,6 +228,7 @@ def zobraz_trenerov():
     # Odkaz na návrat
     #vystup += '<a href="/">Späť</a>'
     return render_template ("treneri.html", treneri = treneri)
+
 
 @app.route('/sucetkapacity')
 def zobraz_kapacitu():
