@@ -1,6 +1,6 @@
 # Je NUTNÉ nainštalovať alíček: do konzoly napíšte "pip install flask"
-from flask import Flask, request, render_template
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, render_template # type: ignore
+from flask_sqlalchemy import SQLAlchemy # type: ignore
 import os
 import hashlib
 import sqlite3
