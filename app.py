@@ -4,9 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import hashlib
 import sqlite3
+from flask import g,session
+from i18n import TRANSLATIONS, SUPPORTED
+
 
 app = Flask(__name__, instance_relative_config=True)
 os.makedirs(app.instance_path, exist_ok=True)
+app.secret_key = "tajny_kluc"
 db_path = os.path.join(app.instance_path, "kurzy.db")
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -17,6 +21,18 @@ db = SQLAlchemy(app)
 # <a href="www.---.com"> ...text...></a>        - odkaz (v rámci textu)
 # <button> ...text... </button>                 - tlačidlo s textom
 
+
+@app.before_request
+def set_lang():
+    lang = request.args.get("lang")
+    if lang not in SUPPORTED:
+        lang = session.get("lang","sk")
+    session["lang"] = lang
+    g.t = TRANSLATIONS[lang]
+
+@app.context_processor
+def inject_translations():
+    return dict(t=g.t)
 
 # Pripojenie k databáze
 def pripoj_db():
