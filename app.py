@@ -65,6 +65,17 @@ class Kurz(db.Model):
     
     def __repr__(self):
         return f"<Kurz {self.Nazov_kurzu}>"
+    
+class Kurz(db.Model): 
+    __tablename__= "Kurzy" 
+    ID_kurzu             = db.Column(db.Integer, primary_key=True) 
+    Nazov_kurzu          = db.Column(db.String, nullable=False) 
+    Typ_sportu           = db.Column(db.String) 
+    Max_pocet_ucastnikov = db.Column(db.Integer) 
+    ID_trenera           = db.Column(db.Integer) 
+    
+    def __repr__(self):
+        return f"<Kurz {self.Nazov_kurzu}>"   
 
 
 @app.route('/registracia_trenera', methods=['GET'])
@@ -192,36 +203,11 @@ def registracia_kurzu():
 # PODSTRÁNKA NA ZOBRAZENIE KURZOV
 @app.route('/miesta')  # API endpoint
 def zobraz_miesta():
-    conn = pripoj_db()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Miesta")
-    miesto = cursor.fetchall()
-
-    conn.close()
-
-   
-    # for Nazov_miesta in miesto:
-     #    vystup += f"<p>{Nazov_miesta}</p>"      # výpis kurzov do paragrafov <p>
-
-    # vystup += '<a href="/">Späť</a>'    # k výstupu (+) pridáme odkaz s textom "Späť", ktorý odkazuje na stránku "/", teda homepage
     return render_template ("miesta.html", miesto = miesto)
 
 
 @app.route('/kurzy')  # API endpoint
 def zobraz_kurzy():
-    """
-    conn = pripoj_db()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Kurzy")
-    kurzy = cursor.fetchall()
-
-    conn.close()
-
-    # Jednoduchý textový výpis kurzov
-    return render_template ("kurzy.html", kurzy = kurzy)   
-"""
     kurzy = Kurz.query.all()
     return render_template("kurzy.html", kurzy = kurzy)
 
